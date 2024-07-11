@@ -7,6 +7,7 @@ use App\Models\Contract;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ContractController extends Controller
 {
@@ -40,7 +41,7 @@ class ContractController extends Controller
 
     public function accept(Request $request, Contract $contract)
     {
-        $this->authorize('update', $contract);
+        Gate::authorize('update', $contract);
 
         $contract->status = 'accepted';
         $contract->save();
@@ -50,7 +51,7 @@ class ContractController extends Controller
 
     public function reject(Request $request, Contract $contract)
     {
-        $this->authorize('update', $contract);
+        Gate::authorize('update', $contract);
 
         $contract->delete();
 
@@ -59,7 +60,7 @@ class ContractController extends Controller
 
     public function return(Request $request, Contract $contract)
     {
-        $this->authorize('update', $contract);
+        Gate::authorize('update', $contract);
 
         $contract->delete();
 
