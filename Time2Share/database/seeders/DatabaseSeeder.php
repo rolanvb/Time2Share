@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
 
             // For each user, create a random number of contracts
             Contract::factory(random_int(0, 8))->create([
-                'owner_id' => $user->id,
-                'contractor_id' => User::inRandomOrder()->first()->id
+                'lender_id' => $user->id,
+                'borrower_id' => User::inRandomOrder()->first()->id
             ]);
 
             // For each user, create a random number of reviews

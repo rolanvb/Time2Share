@@ -15,7 +15,7 @@ class Contract extends Model
         'borrower_id',
         'start_date',
         'end_date',
-        'status',
+        'is_accepted',
     ];
 
     public function item()

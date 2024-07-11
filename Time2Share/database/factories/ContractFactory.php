@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Item;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Review>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contract>
  */
-class ReviewFactory extends Factory
+class ContractFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +19,12 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'reviewer_id' => User::factory(), // This will be overridden in the seeder
-            'reviewed_user_id' => User::factory(), // This will be overridden in the seeder
-            'rating' => $this->faker->numberBetween(1, 5),
-            'review_text' => $this->faker->sentence,
+            'item_id' => Item::factory(), // This will be overridden in the seeder
+            'lender_id' => User::factory(), // This will be overridden in the seeder
+            'borrower_id' => User::factory(), // This will be overridden in the seeder
+            'start_date' => $this->faker->dateTimeBetween('-1 month', '+1 month')->format('Y-m-d'),
+            'end_date' => $this->faker->dateTimeBetween('+1 month', '+2 months')->format('Y-m-d'),
+            'is_accepted' => $this->faker->boolean,
         ];
     }
 }
