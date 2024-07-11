@@ -21,7 +21,7 @@ class ItemFactory extends Factory
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,
             'image_url' => $this->faker->imageUrl(),
-            'owner_id' => User::factory(),
+            'owner_id' => User::factory(), // This will be overridden in the seeder
         ];
     }
 }

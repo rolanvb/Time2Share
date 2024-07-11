@@ -18,8 +18,8 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'reviewer_id' => User::factory(),
-            'reviewed_user_id' => User::factory(),
+            'reviewer_id' => User::factory(), // This will be overridden in the seeder
+            'reviewed_user_id' => User::factory(), // This will be overridden in the seeder
             'rating' => $this->faker->numberBetween(1, 5),
             'review_text' => $this->faker->sentence,
         ];

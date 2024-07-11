@@ -3,13 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Item;
 use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contract>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Review>
  */
-class ContractFactory extends Factory
+class ReviewFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,10 +18,10 @@ class ContractFactory extends Factory
     public function definition(): array
     {
         return [
-            'item_id' => Item::factory(),
-            'contractor_id' => User::factory(),
-            'owner_id' => User::factory(),
-            'status' => $this->faker->randomElement(['pending', 'accepted', 'rejected']),
+            'reviewer_id' => User::factory(), // This will be overridden in the seeder
+            'reviewed_user_id' => User::factory(), // This will be overridden in the seeder
+            'rating' => $this->faker->numberBetween(1, 5),
+            'review_text' => $this->faker->sentence,
         ];
     }
 }
