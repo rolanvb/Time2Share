@@ -27,14 +27,13 @@ class DatabaseSeeder extends Seeder
             // For each user, create a random number of contracts
             Contract::factory(random_int(0, 8))->create([
                 'lender_id' => $user->id,
-                'borrower_id' => User::inRandomOrder()->first()->id
-            ]);
+                'borrower_id' => User::inRandomOrder()->where('id', '!=', $user->id)->first()->id,            ]);
 
             // For each user, create a random number of reviews
             Review::factory(random_int(1, 3))->create([
                 'reviewer_id' => $user->id,
-                'reviewed_user_id' => User::inRandomOrder()->first()->id
-            ]);
+                'reviewed_user_id' => User::inRandomOrder()->where('id', '!=', $user->id)->first()->id
+                ]);
         });
     }
 }

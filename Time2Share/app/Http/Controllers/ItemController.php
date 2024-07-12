@@ -12,8 +12,9 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::all();
-        return view('items.index', compact('items'));
+        // Fetch items without a contract and paginate them
+        $items = Item::whereDoesntHave('contracts')->paginate(10);
+        return view('dashboard', compact('items'));
     }
 
     public function create()
