@@ -14,17 +14,17 @@
 
                         <div class="mb-4">
                             <label for="name" class="block text-gray-900 dark:text-gray-100">Item Name</label>
-                            <input type="text" id="name" name="name" class="border rounded p-2 w-full" required autofocus>
+                            <input type="text" id="name" name="name" class="border rounded p-2 w-full text-gray-800" required autofocus>
                         </div>
 
                         <div class="mb-4">
                             <label for="description" class="block text-gray-900 dark:text-gray-100">Description</label>
-                            <textarea id="description" name="description" rows="4" class="border rounded p-2 w-full"></textarea>
+                            <textarea id="description" name="description" rows="4" class="border rounded p-2 w-full text-gray-800"></textarea>
                         </div>
 
                         <div class="mb-4">
                             <label for="image" class="block text-gray-900 dark:text-gray-100">Image (optional)</label>
-                            <input type="file" id="image" name="image_url" accept="image/*" class="border rounded p-2">
+                            <input type="file" id="image" name="image_url" accept="image/*" class="border rounded p-2 text-gray-800 dark:text-gray-100">
                         </div>
 
                         <div class="flex justify-end">
