@@ -15,8 +15,6 @@
                 .filter(item => item.name.toLowerCase().includes(this.search.toLowerCase()))
                 .sort((a, b) => {
                     let modifier = this.sortOrder === 'asc' ? 1 : -1;
-                    let aValue = this.sortKey === 'owner.name' ? a.owner.name : a[this.sortKey];
-                    let bValue = this.sortKey === 'owner.name' ? b.owner.name : b[this.sortKey];
                     if (aValue < bValue) return -1 * modifier;
                     if (aValue > bValue) return 1 * modifier;
                     return 0;
@@ -32,7 +30,6 @@
                             <label for="sortKey" class="mr-2 text-gray-900 dark:text-gray-100">Sort by:</label>
                             <select id="sortKey" x-model="sortKey" class="border rounded p-2 pr-7 mr-2 text-gray-900">
                                 <option value="name">Name</option>
-                                <option value="owner.name">Owner</option>
                                 <option value="updated_at">Date</option>
                             </select>
                             <button @click="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'" class="p-2 border rounded text-gray-900 dark:text-gray-100">

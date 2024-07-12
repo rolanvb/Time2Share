@@ -4,19 +4,28 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContractController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Item;
 
 // Default route
-Route::get('/', function () {
-    return view('login');
-});
+Route::get('/', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-// Dashboard route
-Route::get('/dashboard', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/own-items', [ItemController::class, 'ownerItems'])->middleware(['auth', 'verified'])->name('ownItems');
+
+Route::get('/borrowed-items', [ItemController::class, 'borrowedItems'])->middleware(['auth', 'verified'])->name('borrowedItems');
+
 
 // Items routes
 Route::get('/items', [ItemController::class, 'index'])->name('items.index');
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+
+Route::get('/items/{item}', function (Item $item){
+
+    return view('show', [
+        'item' => $item
+    ]);
+
+})->name('items.show');
 
 // Contracts routes
 Route::get('/items/{item}/borrow', [ContractController::class, 'create'])->name('contracts.create');
@@ -38,3 +47,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+Route::fallback(function(){
+    return 'Page not found';
+});
+

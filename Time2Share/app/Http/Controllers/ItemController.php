@@ -12,9 +12,25 @@ class ItemController extends Controller
 {
     public function index()
     {
-        // Fetch items without a contract and paginate them
-        $items = Item::whereDoesntHave('contracts')->paginate(10);
+        // Fetch items without a contract, eager load the owner relationship, and paginate them
+        $items = Item::whereDoesntHave('contracts')->with('owner')->paginate(10);
         return view('dashboard', compact('items'));
+    }
+
+    public function ownerItems()
+    {
+        // Fetch items owned by the authenticated user, eager load the owner relationship, and paginate them
+        $items = Item::where('owner_id', Auth::id())->with('owner')->paginate(10);
+        return view('ownItems', compact('items'));
+    }
+
+    public function borrowedItems()
+    {
+        // Fetch items borrowed by the authenticated user, eager load the owner relationship, and paginate them
+        $items = Item::whereHas('contracts', function ($query) {
+            $query->where('borrower_id', Auth::id());
+        })->with('owner')->paginate(10);
+        return view('borrowedItems', compact('items'));
     }
 
     public function create()
@@ -42,6 +58,15 @@ class ItemController extends Controller
             'image_url' => $validatedData['image_url'] ?? 'https://via.placeholder.com/150',
         ]);
 
+
         return redirect()->route('items.index')->with('success', 'Item created successfull!.');
+    }
+
+    public function show(Item $item)
+    {
+        // Eager load the owner relationship
+        $item->load('owner');
+
+        return view('items.show', compact('item'));
     }
 }
