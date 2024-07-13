@@ -1,8 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ $item->name }}
-        </h2>
+        <div class="flex items-center">
+            <a href="{{ route('pendingRequests') }}" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ $item->name }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -24,6 +31,8 @@
                         <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="w-full h-auto max-h-96 object-cover rounded-lg">
                     </div>
                     <div class="mt-4">
+                        <p >Start Date: {{$contract->start_date}} </p>
+                        <p >End Date: {{$contract->end_date}} </p>
                         <p class="mt-4 text-xl font-semibold">Description</p>
                         <p class="mb-4">{{ $item->description }}</p>
                         <p class="text-gray-600 dark:text-gray-400">Posted: {{ $item->created_at->diffForHumans() }}</p>
