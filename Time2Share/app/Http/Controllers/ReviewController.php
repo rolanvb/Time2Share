@@ -41,6 +41,6 @@ class ReviewController extends Controller
         $user = User::with('reviewsReceived.reviewer')->findOrFail($userId);
         $reviews = $user->reviewsReceived;
 
-        return view('reviews.show', compact('user', 'reviews'));
+        return view('reviews', compact('user', 'reviews'));
     }
 }
