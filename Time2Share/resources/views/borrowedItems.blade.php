@@ -43,7 +43,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <template x-for="item in filteredItems" :key="item.id">
-                            <a :href="'/items/' + item.id" class="block">
+                            <a :href="'/borrowed-items/' + item.id" class="block">
                                 <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg mb-4">
                                     <img :src="item.image_url" :alt="item.name" class="w-full h-48 object-cover mb-4 rounded">
                                     <h3 class="text-xl font-bold mb-2" x-text="item.name"></h3>

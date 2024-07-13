@@ -23,22 +23,15 @@
                         <p class="text-gray-600 dark:text-gray-400">Last Updated: {{$item->updated_at->diffForHumans()}}</p>
                     </div>
 
-                    <form action="{{ route('contracts.store', $item->id) }}" method="POST" class="mt-4">
-                        @csrf
-                        <h1 class="text-xl font-semibold">Request to Borrow</h1>
-                        <div class="mb-4 w-40">
-                            <label for="start_date">Start Date</label>
-                            <input type="date" id="start_date" name="start_date" class="border rounded p-2 w-full text-gray-800" required>
-                            <label for="end_date">End Date</label>
-                            <input type="date" id="end_date" name="end_date" class="border rounded p-2 w-full text-gray-800" required>
-                        </div>
-
-                        <div class="flex justify-end">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2">
-                                Submit Request
-                            </button>
-                        </div>
+                    <form action="">
+                        <Button>
+                            <a href="{{ route('contracts.accept', $item->id) }}">Accept Request</a>
+                        </Button>
+                        <Button>
+                            <a href="{{ route('contracts.reject', $item->id) }}">Reject Request</a>
+                        </Button>
                     </form>
+
                 </div>
             </div>
         </div>

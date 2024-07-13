@@ -17,6 +17,16 @@ class ItemController extends Controller
         return view('dashboard', compact('items'));
     }
 
+    public function pendingRequests()
+    {
+        // Fetch items with a pending contract, eager load the owner relationship, and paginate them
+        $items = Item::whereHas('contracts', function ($query) {
+            $query->where('is_accepted', false);
+        })->with('owner')->paginate(25);
+
+        return view('pendingRequests', compact('items'));
+    }
+
     public function ownerItems()
     {
         // Fetch items owned by the authenticated user, eager load the owner relationship, and paginate them

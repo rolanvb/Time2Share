@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use App\Models\Item;
 use Illuminate\Http\Request;
@@ -32,18 +31,19 @@ class ContractController extends Controller
             'borrower_id' => Auth::id(),
             'start_date' => $validatedData['start_date'],
             'end_date' => $validatedData['end_date'],
+            'is_accepted' => false, // default value
         ]);
 
         $contract->save();
 
-        return redirect()->route('items.index', $item->id)->with('success', 'Borrow request created successfully!');
+        return redirect()->route('items.show', $item->id)->with('success', 'Borrow request created successfully!');
     }
 
     public function accept(Request $request, Contract $contract)
     {
         Gate::authorize('update', $contract);
 
-        $contract->status = 'accepted';
+        $contract->is_accepted = true;
         $contract->save();
 
         return redirect()->route('items.index')->with('success', 'Borrow request accepted');
