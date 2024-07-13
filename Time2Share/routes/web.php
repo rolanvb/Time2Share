@@ -24,6 +24,7 @@ Route::get('/pending-requests', [ItemController::class, 'pendingRequests'])->mid
 Route::get('/items', [ItemController::class, 'index'])->name('items.index');
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+Route::delete('/items/{item}/delete', [ItemController::class, 'delete'])->name('items.delete');
 
 //Shows singular item
 Route::get('/items/{item}', function (Item $item){

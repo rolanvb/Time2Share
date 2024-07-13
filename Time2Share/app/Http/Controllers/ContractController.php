@@ -35,7 +35,7 @@ class ContractController extends Controller
 
         $contract->save();
 
-        return redirect()->route('items.show', $item->id)->with('success', 'Borrow request created successfully!');
+        return redirect()->route('dashboard', $item->id)->with('success', 'Borrow request created successfully!');
     }
 
     public function accept(Request $request, Contract $contract)
@@ -48,7 +48,7 @@ class ContractController extends Controller
         $contract->is_accepted = true;
         $contract->save();
 
-        return redirect()->route('items.index')->with('success', 'Borrow request accepted');
+        return redirect()->route('pendingRequests')->with('success', 'Borrow request accepted');
     }
 
     public function reject(Request $request, Contract $contract)
@@ -60,7 +60,7 @@ class ContractController extends Controller
 
         $contract->delete();
 
-        return redirect()->route('items.index')->with('success', 'Borrow request rejected');
+        return redirect()->route('pendingRequests')->with('success', 'Borrow request rejected');
     }
 
     public function return(Request $request, Contract $contract)
@@ -72,6 +72,6 @@ class ContractController extends Controller
 
         $contract->delete();
 
-        return redirect()->route('items.index')->with('success', 'Item returned successfully!');
+        return redirect()->route('borrowedItems')->with('success', 'Item returned successfully!');
     }
 }

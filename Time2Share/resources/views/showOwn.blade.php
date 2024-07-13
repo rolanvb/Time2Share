@@ -19,11 +19,17 @@
                     <div class="mt-4">
                         <p class="mt-4 text-xl font-semibold">Description</p>
                         <p class="mb-4">{{ $item->description }}</p>
-                        <p class="text-gray-600 dark:text-gray-400">Posted: {{$item->created_at->diffForHumans()}}</p>
-                        <p class="text-gray-600 dark:text-gray-400">Last Updated: {{$item->updated_at->diffForHumans()}}</p>
+                        <p class="text-gray-600 dark:text-gray-400">Posted: {{ $item->created_at->diffForHumans() }}</p>
+                        <p class="text-gray-600 dark:text-gray-400">Last Updated: {{ $item->updated_at->diffForHumans() }}</p>
                     </div>
 
-
+                    <form action="{{ route('items.delete', $item->id) }}" method="POST" class="mt-4">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this item?')" class="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600 focus:outline-none">
+                            Delete Item
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

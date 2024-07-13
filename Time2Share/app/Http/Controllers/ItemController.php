@@ -69,7 +69,7 @@ class ItemController extends Controller
         $item = Item::create($validatedData);
 
 
-        return redirect()->route('items.index')->with('success', 'Item created successfull!.');
+        return redirect()->route('ownItems')->with('success', 'Item created successfull!.');
     }
 
     public function show(Item $item)
@@ -78,5 +78,12 @@ class ItemController extends Controller
         $item->load('owner');
 
         return view('items.show', compact('item'));
+    }
+
+    public function delete(Item $item)
+    {
+        $item->delete();
+
+        return redirect()->route('ownItems')->with('success', 'Item deleted successfully!');
     }
 }
