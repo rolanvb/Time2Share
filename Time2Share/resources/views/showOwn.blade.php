@@ -11,7 +11,10 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="mb-4">
                         <p class="text-3xl font-bold">{{ $item->name }}</p>
-                        <p class="text-gray-600 dark:text-gray-400">Owner: {{ $item->owner->name }}</p>
+                        <a href="{{route('reviews.show', $item->owner_id)}}"
+                            class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors ">
+                            Owner: {{ $item->owner->name }}
+                        </a>
                     </div>
                     <div class="flex items-center justify-center">
                         <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="w-full h-auto max-h-96 object-cover rounded-lg">

@@ -15,7 +15,7 @@
                             $borrower = \App\Models\User::find($contract->borrower_id);
                         @endphp
                         @if ($borrower)
-                            <p class="text-gray-600 dark:text-gray-400">Requested by: {{ $borrower->name }}</p>
+                            <a href="{{route('reviews.show', $borrower)}}" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors ">Requested by: {{ $borrower->name }}</a>
                         @else
                             <p class="text-gray-600 dark:text-gray-400">Requested by: Unknown</p>
                         @endif

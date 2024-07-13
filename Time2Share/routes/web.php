@@ -77,6 +77,7 @@ Route::get('/users/{user}/reviews/create', [ReviewController::class, 'create'])-
 Route::post('/users/{user}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/users/{user}/reviews', [ReviewController::class, 'show'])->name('reviews.show');
 
+
 // Profile routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
