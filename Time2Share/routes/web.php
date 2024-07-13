@@ -56,12 +56,12 @@ Route::get('/own-items/{item}', function (Item $item){
 })->name('items.own');
 
 //Shows singular borrowed item
-Route::get('/borrowed-items/{item}', function (Item $item){
-
+Route::get('/borrowed-items/{item}', function (Item $item) {
+    $contract = Contract::where('item_id', $item->id)->first();
     return view('showBorrowed', [
-        'item' => $item
+        'item' => $item,
+        'contract' => $contract
     ]);
-
 })->name('items.borrowed');
 
 // Contracts routes

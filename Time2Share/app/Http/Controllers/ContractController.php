@@ -66,7 +66,7 @@ class ContractController extends Controller
     public function return(Request $request, Contract $contract)
     {
         // Check if the current user is the lender (owner) of the item
-        if ($contract->lender_id !== Auth::id()) {
+        if ($contract->borrower_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }
 

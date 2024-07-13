@@ -48,7 +48,7 @@
                                     <img :src="item.image_url" :alt="item.name" class="w-full h-48 object-cover mb-4 rounded">
                                     <h3 class="text-xl font-bold mb-2" x-text="item.name"></h3>
                                     <p class="text-gray-600 dark:text-gray-400">Owner: <span x-text="item.owner.name"></span></p>
-                                    <p class="text-gray-600 dark:text-gray-400"><span x-text="new Date(item.updated_at).toLocaleDateString()"></span></p>
+
                                 </div>
                             </a>
                         </template>

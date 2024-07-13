@@ -40,6 +40,7 @@ class ItemController extends Controller
         // Fetch items borrowed by the authenticated user, eager load the owner relationship, and paginate them
         $items = Item::whereHas('contracts', function ($query) {
             $query->where('borrower_id', Auth::id());
+            $query->where('is_accepted', true);
         })->with('owner')->paginate(25);
         return view('borrowedItems', compact('items'));
     }
