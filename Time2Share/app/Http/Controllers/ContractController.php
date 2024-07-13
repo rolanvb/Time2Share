@@ -6,7 +6,6 @@ use App\Models\Contract;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class ContractController extends Controller
 {
@@ -41,7 +40,10 @@ class ContractController extends Controller
 
     public function accept(Request $request, Contract $contract)
     {
-        Gate::authorize('update', $contract);
+        // Check if the current user is the lender (owner) of the item
+        if ($contract->lender_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $contract->is_accepted = true;
         $contract->save();
@@ -51,7 +53,10 @@ class ContractController extends Controller
 
     public function reject(Request $request, Contract $contract)
     {
-        Gate::authorize('update', $contract);
+        // Check if the current user is the lender (owner) of the item
+        if ($contract->lender_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $contract->delete();
 
@@ -60,7 +65,10 @@ class ContractController extends Controller
 
     public function return(Request $request, Contract $contract)
     {
-        Gate::authorize('update', $contract);
+        // Check if the current user is the lender (owner) of the item
+        if ($contract->lender_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $contract->delete();
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContractController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Item;
+use App\Models\Contract;
 
 // Default route
 Route::get('/', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -34,10 +35,13 @@ Route::get('/items/{item}', function (Item $item){
 })->name('items.show');
 
 //Shows singular requested item
-Route::get('/pending-requests/{item}', function (Item $item){
+Route::get('/pending-requests/{item}', function (Item $item, Contract $contract){
+
+    $contract = Contract::where('item_id', $item->id)->first();
 
     return view('showRequest', [
-        'item' => $item
+        'item' => $item,
+        'contract' => $contract
     ]);
 
 })->name('items.requested');

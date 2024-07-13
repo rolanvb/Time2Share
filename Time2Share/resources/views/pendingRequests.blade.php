@@ -41,19 +41,10 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        <!-- Special card for adding a new item -->
-                        <a href="{{ route('items.create') }}" class="block">
-                            <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg mb-4 flex flex-col justify-center items-center cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-gray-600 dark:text-gray-400 mb-4" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 18a1 1 0 0 1-1-1V11H5a1 1 0 0 1 0-2h4V3a1 1 0 0 1 2 0v6h4a1 1 0 0 1 0 2h-4v6a1 1 0 0 1-1 1z" clip-rule="evenodd" />
-                                </svg>
-                                <h3 class="text-xl font-bold mb-2">Add an item</h3>
-                            </div>
-                        </a>
 
                         <!-- Regular items from the list -->
                         <template x-for="(item, index) in filteredItems" :key="item.id">
-                            <a :href="'/own-items/' + item.id" class="block">
+                            <a :href="'/pending-requests/' + item.id" class="block">
                                 <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg mb-4">
                                     <img :src="item.image_url" :alt="item.name" class="w-full h-48 object-cover mb-4 rounded">
                                     <h3 class="text-xl font-bold mb-2" x-text="item.name"></h3>

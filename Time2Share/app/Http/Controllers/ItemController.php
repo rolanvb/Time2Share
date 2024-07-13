@@ -21,6 +21,7 @@ class ItemController extends Controller
     {
         // Fetch items with a pending contract, eager load the owner relationship, and paginate them
         $items = Item::whereHas('contracts', function ($query) {
+            $query->where('lender_id', Auth::id());
             $query->where('is_accepted', false);
         })->with('owner')->paginate(25);
 
