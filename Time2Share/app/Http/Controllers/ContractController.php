@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class ContractController extends Controller
 {
@@ -32,38 +30,48 @@ class ContractController extends Controller
             'borrower_id' => Auth::id(),
             'start_date' => $validatedData['start_date'],
             'end_date' => $validatedData['end_date'],
+            'is_accepted' => false, // default value
         ]);
 
         $contract->save();
 
-        return redirect()->route('items.index', $item->id)->with('success', 'Borrow request created successfully!');
+        return redirect()->route('dashboard', $item->id)->with('success', 'Borrow request created successfully!');
     }
 
     public function accept(Request $request, Contract $contract)
     {
-        Gate::authorize('update', $contract);
+        // Check if the current user is the lender (owner) of the item
+        if ($contract->lender_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
-        $contract->status = 'accepted';
+        $contract->is_accepted = true;
         $contract->save();
 
-        return redirect()->route('items.index')->with('success', 'Borrow request accepted');
+        return redirect()->route('pendingRequests')->with('success', 'Borrow request accepted');
     }
 
     public function reject(Request $request, Contract $contract)
     {
-        Gate::authorize('update', $contract);
+        // Check if the current user is the lender (owner) of the item
+        if ($contract->lender_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $contract->delete();
 
-        return redirect()->route('items.index')->with('success', 'Borrow request rejected');
+        return redirect()->route('pendingRequests')->with('success', 'Borrow request rejected');
     }
 
     public function return(Request $request, Contract $contract)
     {
-        Gate::authorize('update', $contract);
+        // Check if the current user is the lender (owner) of the item
+        if ($contract->borrower_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $contract->delete();
 
-        return redirect()->route('items.index')->with('success', 'Item returned successfully!');
+        return redirect()->route('borrowedItems')->with('success', 'Item returned successfully!');
     }
 }

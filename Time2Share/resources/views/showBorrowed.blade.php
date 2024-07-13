@@ -19,26 +19,24 @@
                     <div class="mt-4">
                         <p class="mt-4 text-xl font-semibold">Description</p>
                         <p class="mb-4">{{ $item->description }}</p>
-                        <p class="text-gray-600 dark:text-gray-400">Posted: {{$item->created_at->diffForHumans()}}</p>
-                        <p class="text-gray-600 dark:text-gray-400">Last Updated: {{$item->updated_at->diffForHumans()}}</p>
+                        <p class="text-gray-600 dark:text-gray-400">Posted: {{ $item->created_at->diffForHumans() }}</p>
+                        <p class="text-gray-600 dark:text-gray-400">Last Updated: {{ $item->updated_at->diffForHumans() }}</p>
                     </div>
 
-                    <form action="{{ route('contracts.store', $item->id) }}" method="POST" class="mt-4">
-                        @csrf
-                        <h1 class="text-xl font-semibold">Request to Borrow</h1>
-                        <div class="mb-4 w-40">
-                            <label for="start_date">Start Date</label>
-                            <input type="date" id="start_date" name="start_date" class="border rounded p-2 w-full text-gray-800" required>
-                            <label for="end_date">End Date</label>
-                            <input type="date" id="end_date" name="end_date" class="border rounded p-2 w-full text-gray-800" required>
-                        </div>
+                    @php
+                        $contract = $item->contracts()->where('borrower_id', auth()->id())->where('is_accepted', true)->first();
+                    @endphp
 
-                        <div class="flex justify-end">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2">
-                                Submit Request
+                    @if ($contract)
+                        <form action="{{ route('contracts.return', $contract->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none">
+                                Return Item
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    @else
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">You do not have an active contract to return this item.</p>
+                    @endif
                 </div>
             </div>
         </div>

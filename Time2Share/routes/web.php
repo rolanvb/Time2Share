@@ -5,20 +5,28 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContractController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Item;
+use App\Models\Contract;
 
 // Default route
 Route::get('/', [ItemController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+//Shows all owned items
 Route::get('/own-items', [ItemController::class, 'ownerItems'])->middleware(['auth', 'verified'])->name('ownItems');
 
+//Shows all borrowed items
 Route::get('/borrowed-items', [ItemController::class, 'borrowedItems'])->middleware(['auth', 'verified'])->name('borrowedItems');
+
+// //Shows all pending requests
+Route::get('/pending-requests', [ItemController::class, 'pendingRequests'])->middleware(['auth', 'verified'])->name('pendingRequests');
 
 
 // Items routes
 Route::get('/items', [ItemController::class, 'index'])->name('items.index');
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+Route::delete('/items/{item}/delete', [ItemController::class, 'delete'])->name('items.delete');
 
+//Shows singular item
 Route::get('/items/{item}', function (Item $item){
 
     return view('show', [
@@ -26,6 +34,36 @@ Route::get('/items/{item}', function (Item $item){
     ]);
 
 })->name('items.show');
+
+//Shows singular requested item
+Route::get('/pending-requests/{item}', function (Item $item, Contract $contract){
+
+    $contract = Contract::where('item_id', $item->id)->first();
+
+    return view('showRequest', [
+        'item' => $item,
+        'contract' => $contract
+    ]);
+
+})->name('items.requested');
+
+//Shows singular owned item
+Route::get('/own-items/{item}', function (Item $item){
+
+    return view('showOwn', [
+        'item' => $item
+    ]);
+
+})->name('items.own');
+
+//Shows singular borrowed item
+Route::get('/borrowed-items/{item}', function (Item $item) {
+    $contract = Contract::where('item_id', $item->id)->first();
+    return view('showBorrowed', [
+        'item' => $item,
+        'contract' => $contract
+    ]);
+})->name('items.borrowed');
 
 // Contracts routes
 Route::get('/items/{item}/borrow', [ContractController::class, 'create'])->name('contracts.create');
